@@ -16,9 +16,9 @@ import dCopy.archiver.model.ParchModel;
 import dCopy.model.Tableinfo;
 
 public class ListAdd {
-	private static String url = "jdbc:mysql://192.168.1.200:3306";
+	private static String url = "jdbc:mysql://192.168.1.200:3306/pt_test";
 	private static String username = "atul";
-	private static String password = "Atul@2019800";
+	private static String password = "UAV432G!B3";
 	private static Connection conn=null;
 	private static PreparedStatement psmt=null;
 	private static ResultSet rs=null;
@@ -33,7 +33,6 @@ public class ListAdd {
 		try {
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,username,password);
-		conn.setCatalog("pt_test");
 		psmt = conn.prepareStatement(query);
 		rs = psmt.executeQuery();
 		dbNameList = new ArrayList<>();
