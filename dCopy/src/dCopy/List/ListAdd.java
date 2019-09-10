@@ -23,6 +23,7 @@ public class ListAdd {
 	private static PreparedStatement psmt=null;
 	private static ResultSet rs=null;
 	
+//	xd1234
 	
 	
 	public static List<DataBaseInfo> allDbData(String query) throws SQLException, ClassNotFoundException{
@@ -139,7 +140,11 @@ public class ListAdd {
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
-									Parchiver.fullTableCopyNoDelete(archiverInfo);
+									try {
+										Parchiver.fullTableCopyNoDelete(archiverInfo);
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
 								}
 							}).start();
 						}
@@ -155,12 +160,17 @@ public class ListAdd {
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
-									Parchiver.fullTableCopyYesDelete(archiverInfo);
+									try {
+										Parchiver.fullTableCopyYesDelete(archiverInfo);
+									}
+						           catch (InterruptedException e) {
+									e.printStackTrace();
 								}
+						}
 							}).start();
 					}
-			}	
-		 }
+				}	
+            }
 				else {
 					
 				}
@@ -191,7 +201,11 @@ public class ListAdd {
 						 new Thread (new Runnable() {
 							 @Override
 							 public void run() {
-								 Parchiver.fullTableCopyNoDelete(archiverInfo);
+								 try {
+									Parchiver.fullTableCopyNoDelete(archiverInfo);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
 							 }
 						 }).start();
 					 }
