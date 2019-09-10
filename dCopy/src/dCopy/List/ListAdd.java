@@ -16,7 +16,7 @@ import dCopy.archiver.model.ParchModel;
 import dCopy.model.Tableinfo;
 
 public class ListAdd {
-	private static String url = "jdbc:mysql://192.168.1.200:3306/pt_test";
+	private static String url = "jdbc:mysql://192.168.1.200:3306";
 	private static String username = "atul";
 	private static String password = "Atul@2019800";
 	private static Connection conn=null;
@@ -32,6 +32,7 @@ public class ListAdd {
 		try {
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,username,password);
+		conn.setCatalog("pt_test");
 		psmt = conn.prepareStatement(query);
 		rs = psmt.executeQuery();
 		dbNameList = new ArrayList<>();
@@ -133,7 +134,7 @@ public class ListAdd {
 							archiverInfo.setSourceTableName(tTemp.gettablename());
 							archiverInfo.setSourceDataBaseName(dTemp.getDataBaseName());
 							archiverInfo.setDestTableName(tTemp.gettablename());
-							archiverInfo.setDestDataBaseName("pt_test");
+							archiverInfo.setDestDataBaseName(dTemp.getDataBaseName());
 							
 							new Thread(new Runnable() {
 								@Override
@@ -149,7 +150,7 @@ public class ListAdd {
 							archiverInfo.setSourceTableName(tTemp.gettablename());
 							archiverInfo.setSourceDataBaseName(dTemp.getDataBaseName());
 							archiverInfo.setDestTableName(tTemp.gettablename());
-							archiverInfo.setDestDataBaseName("pt_test");
+							archiverInfo.setDestDataBaseName(dTemp.getDataBaseName());
 							
 							new Thread(new Runnable() {
 								@Override
@@ -186,7 +187,7 @@ public class ListAdd {
 					 if(tTemp.getdate_check()==0) {
 						 archiverInfo.setSourceTableName(tTemp.gettablename());
 						 archiverInfo.setDestTableName(tTemp.gettablename());
-						 archiverInfo.setDestDataBaseName("pt_test");
+						 archiverInfo.setDestDataBaseName(Conditions.getDbName(tTemp.getDb_id()));
 						 new Thread (new Runnable() {
 							 @Override
 							 public void run() {
@@ -196,7 +197,7 @@ public class ListAdd {
 					 }
 				 }
 				 else {
-					 
+					 continue;
 				 }
 			 }
 		 }
