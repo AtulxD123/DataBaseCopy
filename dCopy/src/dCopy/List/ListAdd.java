@@ -18,7 +18,7 @@ import dCopy.model.Tableinfo;
 public class ListAdd {
 	private static String url = "jdbc:mysql://192.168.1.200:3306/pt_test";
 	private static String username = "atul";
-	private static String password = "UAV432G!B3";
+	private static String password = "UAV432GvB3";
 	private static Connection conn=null;
 	private static PreparedStatement psmt=null;
 	private static ResultSet rs=null;

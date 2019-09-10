@@ -33,7 +33,7 @@ public class DataCopy {
 //			}
 //			
 //		}
-		System.out.println(dbInfoList);
-		System.out.println(tableInfoList);
+//		System.out.println(dbInfoList);
+//		System.out.println(tableInfoList);
 	}
 }
