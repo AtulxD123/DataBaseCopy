@@ -14,4 +14,7 @@ public class QueryUtil {
 	public static String dbNameQuery() {
 		return "Select db_name from db_backup where id =?";
 	}
+	public static String masterTableQuery() {
+		return "Select * from db_backup_tables where level=0 and has_dependent=1";
+	}
 }
