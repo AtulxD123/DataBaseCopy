@@ -19,5 +19,8 @@ public class QueryUtil {
 	}
 	public static String fetchFreeTables(){
 		return "Select * from db_backup_tables where level=0 and has_dependent=0 and date_check=0 and db_id=0";
+			}
+	public static String fetchFreeTablesSpecifiedByDb(){
+		return "Select * from db_backup_tables where level=0 and has_dependent=0 and date_check=0 and not db_id=0";
 	}
 }

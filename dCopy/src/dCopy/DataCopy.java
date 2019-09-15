@@ -32,13 +32,7 @@ public class DataCopy {
 			
 			e.printStackTrace();
 		}
-//		System.out.println(tableName);
-//		for (String k : zero_table) {
-//			for(String m : db_names) {
-//				singleTableCopy(k,m);
-//			}
-//			
-//		}
+
 		for(int i=0;i<dbInfoList.size();i++) {
 			System.out.println(dbInfoList.get(i));
 		}
