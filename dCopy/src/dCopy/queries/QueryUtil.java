@@ -17,4 +17,7 @@ public class QueryUtil {
 	public static String masterTableQuery() {
 		return "Select * from db_backup_tables where level=0 and has_dependent=1";
 	}
+	public static String fetchFreeTables(){
+		return "Select * from db_backup_tables where level=0 and has_dependent=0 and date_check=0 and db_id=0";
+	}
 }
