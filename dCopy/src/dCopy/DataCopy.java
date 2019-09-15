@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import dCopy.CheckList.CheckList;
 import dCopy.DbNames.DataBaseInfo;
 import dCopy.List.ListAdd;
 import dCopy.model.Tableinfo;
@@ -25,7 +26,12 @@ public class DataCopy {
 		List <Tableinfo> tableInfoList = ListAdd.getTableData(QueryUtil.fetchTableNames());
 //		Iterator<Tableinfo> i1 = tableInfoList.iterator();
 //		System.out.println(zeroTableList);
-		ListAdd.checkList(tableInfoList,dbInfoList);
+		try {
+			CheckList.checkList(tableInfoList, dbInfoList);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 //		System.out.println(tableName);
 //		for (String k : zero_table) {
 //			for(String m : db_names) {
@@ -33,7 +39,7 @@ public class DataCopy {
 //			}
 //			
 //		}
-		for(int i=0 : dbInfoList.size()) {
+		for(int i=0;i<dbInfoList.size();i++) {
 			System.out.println(dbInfoList.get(i));
 		}
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import dCopy.DbNames.DataBaseInfo;
 import dCopy.List.ListAdd;
+import dCopy.model.Tableinfo;
 import dCopy.queries.QueryUtil;
 
 public class Conditions {
@@ -27,6 +28,27 @@ public class Conditions {
 			}
 		}
 		return dataBaseName;
+	}
+	
+	public static String fetchTableName(List<Tableinfo> tableInfoList,int tableId){
+		String masterTableName = null;
+		for(Tableinfo tTemp : tableInfoList){
+			if(tTemp.getId()==tableId){
+				masterTableName = tTemp.gettablename();
+			}
+		}
+		return masterTableName;
+	}
+
+
+	public static String fetchTablePrimaryKey(List<Tableinfo> tableInfoList,int tableId){
+		String PrimaryKeyField = null;
+		for(Tableinfo tTemp : tableInfoList){
+			if(tTemp.getId()==tableId){
+				PrimaryKeyField = tTemp.getPrimaryKey();
+			}
+		}
+		return PrimaryKeyField;
 	}
 }
 

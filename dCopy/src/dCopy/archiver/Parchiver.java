@@ -1,6 +1,7 @@
 package dCopy.archiver;
 
 import java.io.IOException;
+import java.util.Date;
 
 import dCopy.archiver.model.ParchModel;
 
@@ -50,5 +51,42 @@ public class Parchiver {
 	}
 	
 	
-	public static void dateCheckTableCopyNoDelete(ParchModel sourceDestiation,string dateCheckField)
+	public static void dateCheckTableCopyNoDelete(ParchModel sourceDestination,String dateCheckField, Date dateDuration) throws InterruptedException{
+
+		String sourceDataBaseName = sourceDestination.getSourceDataBaseName();
+		String sourceTableName = sourceDestination.getSourceTableName();
+		String destDataBaseName = sourceDestination.getDestDataBaseName();
+		String destTableName = sourceDestination.getDestTableName();
+	
+		
+		
+		String[] command = {"cmd", "/c", "start cmd", "/K","pt-archiver","--source h=104.43.210.216,P=3306,u=atul,p=UP23215@^GAQ,D="+sourceDataBaseName+",t="+sourceTableName+" --dest h=192.168.1.200,P=3306,u=atul,p=UAV432GvB3,D="+destDataBaseName+",t="+destTableName+" --where "+dateCheckField+"<"+dateDuration+" --progress 1000 --txn-size=1000 --limit=1000 --bulk-insert --dry-run"};
+		ProcessBuilder processBuild = new ProcessBuilder();
+		processBuild.command(command);
+		try {
+			
+			Process process = processBuild.start();
+			}catch(Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
+	public static void dependentTableCopy(ParchModel sourceDestination,String dependantTablePrimaryKey,String foreignKey,String dependentTableName){
+		
+		String sourceDataBaseName = sourceDestination.getSourceDataBaseName();
+		String sourceTableName = sourceDestination.getSourceTableName();
+		String destDataBaseName = sourceDestination.getDestDataBaseName();
+		String destTableName = sourceDestination.getDestTableName();
+	
+		String[] command = {"cmd", "/c", "start cmd", "/K","pt-archiver","--source h=104.43.210.216,P=3306,u=atul,p=UP23215@^GAQ,D="+sourceDataBaseName+",t="+sourceTableName+" --dest h=192.168.1.200,P=3306,u=atul,p=UAV432GvB3,D="+destDataBaseName+",t="+destTableName+" --where EXISTS(SELECT * from "+sourceTableName+" WHERE"+sourceTableName+"."+foreignKey+"="+dependentTableName+"."+dependantTablePrimaryKey+")  --progress 1000 --txn-size=1000 --limit=1000 --bulk-insert --dry-run"};
+		ProcessBuilder processBuild = new ProcessBuilder();
+
+		processBuild.command(command);
+		try {
+			
+			Process process = processBuild.start();
+			}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
