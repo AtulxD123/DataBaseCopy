@@ -19,6 +19,17 @@ public class Checktest {
 
 	public static void checkList(List<Tableinfo> tableList,List<DataBaseInfo> dataBaseList) throws SQLException, IOException, ClassNotFoundException {
 		List<Tableinfo> freeTableList = ListAdd.getTableData(QueryUtil.fetchFreeTables());
+		List<Tableinfo> masterTablelist = ListAdd.getTableData(QueryUtil.masterTableQuery());
+		ParchModel archiverInfo = new ParchModel();
+		
+		for(Tableinfo tab : freeTableList){
+			for(DataBaseInfo dtab: dataBaseList){
+				archiverInfo.setSourceDataBaseName(dtab.getDataBaseName());
+				archiverInfo.setSourceTableName(tab.gettablename());
+				archiverInfo.setDestDataBaseName(dtab.getDataBaseName());
+				archiverInfo.setDestTableName(tab.gettablename());
+			}
+		}
 	
 	
 	}
