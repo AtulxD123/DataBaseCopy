@@ -50,6 +50,10 @@ public class Conditions {
 		}
 		return PrimaryKeyField;
 	}
+	
+	public static String dbSpecificTableList(int dbId){
+		return String.format("tableListDbIs%d", dbId);
+	}
 }
 
 
