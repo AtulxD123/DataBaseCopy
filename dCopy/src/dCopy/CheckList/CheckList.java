@@ -17,6 +17,7 @@ import dCopy.queries.QueryUtil;
 public class CheckList {
 
 	static List<Tableinfo> masterTableList = new ArrayList<>();
+	static List<Tableinfo> secondaryMasterTableList = new ArrayList<>();
 	static Date dateDuration = null;
 	
 	public static void checkList(List<Tableinfo> tableList,List<DataBaseInfo> dataBaseList) throws SQLException, IOException, ClassNotFoundException, InterruptedException {
@@ -194,8 +195,8 @@ public class CheckList {
 	}
 				break;
 			case 1 :
-				String dependentTableName = Conditions.fetchTableName(tableList, tTemp.getTableId());
-				String dependentTablePrimaryKey = Conditions.fetchTablePrimaryKey(tableList,tTemp.getTableId());
+				String dependentTableName = Conditions.fetchTableName(masterTableList, tTemp.getTableId());
+				String dependentTablePrimaryKey = Conditions.fetchTablePrimaryKey(masterTableList,tTemp.getTableId());
 				if (tTemp.getHas_dependent()==0){
 					if(tTemp.getdate_check()==0){
 						if(tTemp.getDb_id()==0){
@@ -219,6 +220,22 @@ public class CheckList {
 						}
 						else{
 //							db_id != 0
+							archiverInfo.setSourceDataBaseName(Conditions.getDbFromList(tTemp.getDb_id(), dataBaseList));
+							archiverInfo.setDestDataBaseName(Conditions.getDbFromList(tTemp.getDb_id(), dataBaseList));
+							archiverInfo.setSourceTableName(tTemp.gettablename());
+							archiverInfo.setDestTableName(tTemp.gettablename());
+							
+							new Thread(new Runnable(){
+								@Override
+								public void run(){
+									try{
+										Parchiver.dependentTableCopy(archiverInfo, dependentTablePrimaryKey, tTemp.getForiegnKey(), dependentTableName);
+									}catch(Exception e){
+										e.printStackTrace();
+									}
+								}
+							}).start();
+
 						}
 					}
 					else{
@@ -234,6 +251,7 @@ public class CheckList {
 				}
 				else{
 //					Has_dependent != 0
+					secondaryMasterTableList = ListAdd.getTableData(QueryUtil.fetchSecondaryMasterTable());
 				}
 				break;
 			case 2 : 

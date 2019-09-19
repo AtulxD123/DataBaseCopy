@@ -1,5 +1,7 @@
 package dCopy.model;
 
+import java.util.List;
+
 public class Tableinfo {
 
 	private int id;
@@ -13,7 +15,14 @@ public class Tableinfo {
 	private int level;
 	private int has_dependent;
 	private int date_check;
+	private List<Tableinfo> subTable;
 	
+	public List<Tableinfo> getsubTable(){
+		return subTable;
+	}
+	public void setsubTable(List<Tableinfo> subTable){
+		this.subTable = subTable;
+	}
 	
 	public int getId() {
 		return id;

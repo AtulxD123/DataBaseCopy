@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import dCopy.CheckList.CheckList;
+import dCopy.CheckList.test.Checktest;
 import dCopy.DbNames.DataBaseInfo;
 import dCopy.List.ListAdd;
 import dCopy.model.Tableinfo;
@@ -19,24 +20,17 @@ import dCopy.queries.QueryUtil;
 
 public class DataCopy {
 
-	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, InterruptedException {
 		
 //		List <String> zeroTableList = ListAdd.tableidList(QueryUtil.zeroTables());
 		List <DataBaseInfo> dbInfoList = ListAdd.allDbData(QueryUtil.fetchDataBaseNames());
-		List <Tableinfo> tableInfoList = ListAdd.getTableData(QueryUtil.fetchTableNames());
-//		Iterator<Tableinfo> i1 = tableInfoList.iterator();
-//		System.out.println(zeroTableList);
-		try {
-			CheckList.checkList(tableInfoList, dbInfoList);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+//		List <Tableinfo> tableInfoList = ListAdd.getTableData(QueryUtil.fetchTableNames());
+		List <Tableinfo> dependentTables = null;
+		Checktest.checkList(dbInfoList);
 
-		for(int i=0;i<dbInfoList.size();i++) {
-			System.out.println(dbInfoList.get(i));
-		}
 		
+		
+		System.out.println(dbInfoList);
 //		System.out.println(tableInfoList);
 	}
 }

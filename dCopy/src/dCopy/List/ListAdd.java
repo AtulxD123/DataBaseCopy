@@ -16,12 +16,18 @@ import dCopy.archiver.model.ParchModel;
 import dCopy.model.Tableinfo;
 
 public class ListAdd {
-	private static String url = "jdbc:mysql://192.168.1.200:3306/pt_test";
+	private static String url = "jdbc:mysql://104.43.210.216:3306/pt_test";
 	private static String username = "atul";
 	private static String password = "UAV432GvB3";
 	private static Connection conn=null;
 	private static PreparedStatement psmt=null;
 	private static ResultSet rs=null;
+//	private static List<Tableinfo> dependentTableList;
+//	private static List<Tableinfo> secondaryMasterTableList;
+//	private static List<Tableinfo> dependentTableList;
+//	private static List<Tableinfo> masterTableList;
+//	private static List<Tableinfo> freeTableList;
+//	private static List<Tableinfo> secondaryDependentList;
 	
 //	xd1234
 	
@@ -29,7 +35,6 @@ public class ListAdd {
 	public static List<DataBaseInfo> allDbData(String query) throws SQLException, ClassNotFoundException{
 		List<DataBaseInfo> dbNameList = null;
 		
-//		DataSource ds = DBConfig.getMySqlUatDataSource();
 		try {
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,username,password);
@@ -118,6 +123,68 @@ public class ListAdd {
 			e.printStackTrace();
 		}
 		return dbName;
+	}
+	
+	
+	
+	public static List<Tableinfo> fetchSubDependentTables(List<Tableinfo> tableListByDB, int level, int tableId){
+		level+=1;
+		List<Tableinfo> dependentTableList = new ArrayList<>();
+		List<Tableinfo> secondaryDependentTableList = new ArrayList<>();
+		for(Tableinfo tTemp : tableListByDB){
+			if(tTemp.getLevel()==level && tTemp.getTableId()==tableId){
+				if(tTemp.getHas_dependent()==1) {
+					tTemp.setsubTable(fetchSubDependentTables(tableListByDB, tTemp.getLevel(), tTemp.getId()));
+					secondaryDependentTableList.addAll(tTemp.getsubTable());
+				}
+				dependentTableList.add(tTemp);
+			}
+		}
+//			switch(tTemp.getLevel()){
+//			case 0 :
+//				if(tTemp.getHas_dependent()==0){
+//					freeTableList.add(tTemp);
+//				}
+//				else{
+//					masterTableList.add(tTemp);
+//				}
+//				break;
+//			case 1 : 
+//				for(Tableinfo tTemp2 : masterTableList){
+//					if(tTemp.getTableId()==tTemp2.getId()){
+//						dependentTableList.add(tTemp);
+//						if(tTemp.getHas_dependent()!=0){
+//							secondaryMasterTableList.add(tTemp);
+//						}
+//					}
+//				}
+//				break;
+//			case 2 :
+//					for(Tableinfo tTemp3: secondaryMasterTableList){
+//						if(tTemp.getTableId()==tTemp3.getId()){
+//							secondaryDependentList.add(tTemp);
+//						}
+//						
+//					}
+//				}
+//		}
+//		
+		
+		return dependentTableList;
+}
+	
+	public static void printTree(Tableinfo obj){
+		if(obj.getsubTable() == null || obj.getsubTable().isEmpty()){
+//			System.out.println(obj); 
+			}
+		else{
+		for(Tableinfo abc : obj.getsubTable())
+			
+			{
+				System.out.println("subtable of "+obj.getId()+" is:"+abc);
+				printTree(abc);
+				}
+			}
 	}
 }
 
